@@ -12,3 +12,6 @@ apicloud与vant框架搭建商城APP，会持续更新到完整的商城app项�
 |Vant|UI框架|  https://youzan.github.io/vant/#/zh-CN/home|
 |APIcloud|混合框架| https://www.apicloud.com/
 |Fastclick|处理移动端300ms|  https://github.com/ftlabs/fastclick|
+
+# 预览图
+ ![image](https://github.com/iDgex/apicloud-and-vant/blob/master/image/github/0.png)
