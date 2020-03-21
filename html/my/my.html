@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/vant.css" />
+</head>
+<style type="text/css">
+html,body{
+  background-color: #f6f6f6;
+}
+    .sign_in {
+        padding: 0.15rem;
+        font-weight: bold;
+    }
+
+    .sign_in .img {
+        background-color: #CCC;
+        width: 0.45rem;
+        height: 0.45rem;
+        border-radius: 100%;
+        color: #fff;
+        display: flex;
+        font-size: 0.22rem;
+        margin-right: 0.2rem;
+    }
+
+    .user_vip {
+        height: 0.65rem;
+        border-radius: 0.05rem;
+        background-image: linear-gradient(to left, #464541, #262523);
+        color: #c2b298;
+        position: relative;
+        flex-direction: column;
+        margin: 0 0.15rem;
+        padding: 0.1rem 0.15rem;
+    }
+
+    .user_vip .btn {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0.2rem;
+        margin: auto 0;
+        height: 0.25rem;
+        padding-left: 0.1rem;
+        padding-right: 0.05rem;
+        background-color: #e7d5af;
+        color: #262523;
+        border-radius: 0.15rem;
+        font-size: 0.12rem;
+    }
+
+    .user_vip .text {
+        font-size: 0.1rem;
+        opacity: 0.8;
+    }
+
+    .user_vip .icon_vip {
+        font-weight: bold;
+    }
+
+    .container {
+        margin: 0.15rem 0.15rem 0;
+        padding: 0.15rem 0.15rem;
+        border-radius: 0.05rem;
+        background-color: #fff;
+        position: relative;
+    }
+
+    .container .title {
+        font-weight: bold;
+    }
+
+    .container .more {
+        font-size: 0.1rem;
+        color: #9e9da2;
+        position: absolute;
+        top: 0.1rem;
+        right: 0.15rem;
+    }
+
+    .container .order_form {
+        color: #f32d2e;
+    }
+
+    .container .box>.van-grid-item>div {
+        /*margin-top: 0.1rem;*/
+        padding: 0.15rem 0 0.05rem;
+    }
+
+    .container .box .van-grid-item ..van-grid-item__text {
+        font-size: 0.1rem;
+    }
+
+    .wallet .van-grid-item .van-row {
+        flex-direction: column;
+        font-size: 0.12rem;
+    }
+
+    .wallet .van-grid-item .van-row .text {
+        font-size: 0.16rem;
+        margin-bottom: 0.08rem;
+        font-weight: bold;
+    }
+
+    .btn_other {
+        padding: 0.2rem 0.1rem 0;
+        margin-top: 0.05rem;
+    }
+
+    .btn_other .btn_other_icon {
+        width: 0.35rem;
+        height: 0.35rem;
+        border-radius: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        display: flex;
+        margin-right: 0.1rem;
+        background-color: #c5d5ee;
+    }
+
+    .btn_other .btn_other_icon.on {
+        background-color: #f1d3d1;
+    }
+
+    .btn_other .van-col--12 {
+        justify-content: flex-start;
+    }
+
+    .btn_other .van-icon {
+        font-size: 0.18rem;
+        color: #fff;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <!-- 登陆 -->
+        <van-row type="flex" align="center" class="sign_in">
+            <van-icon name="manager" class="img flex_center">
+            </van-icon>
+            <span>登陆/注册</span>
+        </van-row>
+        <!-- 开通vip引导 -->
+        <van-row type="flex" justify="space-around" class="user_vip">
+            <div class="icon_vip">精选会员</div>
+            <div class="text">优选好货低至7折</div>
+            <div class="btn flex_center">
+                <span>开通享特权</span>
+                <van-icon name="arrow">
+                </van-icon>
+            </div>
+        </van-row>
+        <!-- 订单 -->
+        <div class="container">
+            <div class="title">
+                <span>我的订单</span>
+            </div>
+            <div class="more flex_center">
+                <span>全部订单</span>
+                <van-icon name="arrow" />
+            </div>
+            <van-grid :border="false" class="box order_form" column-num="5">
+                <van-grid-item icon="card" text="待付款">
+                </van-grid-item>
+                <van-grid-item icon="todo-list" text="待发货">
+                </van-grid-item>
+                <van-grid-item icon="send-gift" text="待收货">
+                </van-grid-item>
+                <van-grid-item icon="comment" text="待评价">
+                </van-grid-item>
+                <van-grid-item icon="gold-coin" text="退款/售后">
+                </van-grid-item>
+            </van-grid>
+        </div>
+        <!-- 钱包 -->
+        <div class="container">
+            <div class="title">
+                <span>我的钱包</span>
+            </div>
+            <div class="more flex_center">
+                <span>进入钱包</span>
+                <van-icon name="arrow" />
+            </div>
+            <van-grid :border="false" class="box wallet" column-num="3">
+                <van-grid-item>
+                    <van-row type="flex" align="center">
+                        <span class="text">0</span>
+                        <span>优惠券</span>
+                    </van-row>
+                </van-grid-item>
+                <van-grid-item>
+                    <van-row type="flex" align="center">
+                        <span class="text">0</span>
+                        <span>店铺会员</span>
+                    </van-row>
+                </van-grid-item>
+                <van-grid-item>
+                    <van-row type="flex" align="center">
+                        <span class="text">0.00</span>
+                        <span>分期支付</span>
+                    </van-row>
+                </van-grid-item>
+            </van-grid>
+        </div>
+        <!-- 工具 -->
+        <div class="container">
+            <div class="title">
+                <span>我的工具</span>
+            </div>
+            <van-grid :border="false" class="box wallet" column-num="4">
+                <van-grid-item>
+                    <van-row type="flex" align="center">
+                        <span class="text">0</span>
+                        <span>关注商品</span>
+                    </van-row>
+                </van-grid-item>
+                <van-grid-item>
+                    <van-row type="flex" align="center">
+                        <span class="text">0</span>
+                        <span>关注店铺</span>
+                    </van-row>
+                </van-grid-item>
+                <van-grid-item>
+                    <van-row type="flex" align="center">
+                        <span class="text">0</span>
+                        <span>喜欢内容</span>
+                    </van-row>
+                </van-grid-item>
+                <van-grid-item>
+                    <van-row type="flex" align="center">
+                        <span class="text">0</span>
+                        <span>浏览商品</span>
+                    </van-row>
+                </van-grid-item>
+            </van-grid>
+            <van-row type="flex" justify="space-between" class="btn_other border_t">
+                <van-col span="12" class="flex_center">
+                    <span class="btn_other_icon flex_center">
+              <van-icon name="service">
+              </van-icon>
+            </span>
+                    <span>在线客服</span>
+                </van-col>
+                <van-col span="12" class="flex_center">
+                    <span class="btn_other_icon flex_center on">
+              <van-icon name="shop">
+              </van-icon>
+            </span>
+                    <span>我要开店</span>
+                </van-col>
+            </van-row>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/vant.min.js"></script>
+<script src="../../script/common.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            myUserInfo: {},
+        },
+        mounted: function() {
+            apiready = function() {
+                app.init();
+            };
+        },
+        methods: {
+            init: function() {
+                iGlobal.setRefreshHeaderInfo(function () {
+                 setTimeout(function () {
+                   iGlobal.refreshHeaderLoadDone();
+                 },1500)
+                },'','#f6f6f6','#333');
+            }
+        }
+    })
+</script>
+
+</html>

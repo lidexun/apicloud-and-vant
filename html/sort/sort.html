@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/vant.css" />
+</head>
+<style type="text/css">
+.sidebar{
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  background-color: #fafafa;
+  z-index: 1;
+}
+.sort_list{
+  margin-left: 0.85rem;
+  height: 100vh;
+}
+.sort_list .van-grid-item__icon{
+    text-align: center;
+}
+.sort_list .van-icon__image {
+  width: 70%;
+  height: auto;
+  margin: 0 auto;
+}
+.van-sidebar-item{
+}
+.sidebar::-webkit-scrollbar {display:none}
+</style>
+
+<body>
+  <div id="app">
+     <div class="sidebar scroller_y"  @touchstart.stop>
+       <van-sidebar v-model="active" v-if="list.length != 0">
+         <van-sidebar-item v-for="(item,index) in list" :title="item.name"><van-sidebar-item/>
+        </van-sidebar>
+     </div>
+     <transition name="van-fade" v-for="(item,index) in list">
+      <van-grid class="sort_list scroller_y" v-show="index == active" :column-num="3" :border="false">
+        <van-grid-item v-for="(item1,index) in item.list" :text="item1.name" :icon="item1.img">
+        </van-grid-item>
+      </van-grid>
+    </transition>
+  </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/vant.min.js"></script>
+<script src="../../script/common.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            myUserInfo: {},
+            list: [],
+            active:0,
+        },
+        computed:{
+           sortList:function () {
+             return this.list[this.active].list
+           },
+        },
+        mounted: function() {
+            apiready = function() {
+                app.init();
+            };
+        },
+        methods: {
+            init: function() {
+                this.name = api.frameName;
+                model.findAll('sort',function (data) {
+                  app.list = data;
+                  console.log(JSON.stringify(data));
+                },function () {
+
+                })
+            },
+        }
+    })
+</script>
+
+</html>

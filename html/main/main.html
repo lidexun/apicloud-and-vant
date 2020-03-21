@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/vant.css" />
+</head>
+<style type="text/css">
+      html,body{
+        background-color: #f6f6f6;
+      }
+    #app,
+    #header,
+    #footer {
+        position: relative;
+        width: 100%;
+    }
+
+    #header{
+      background-color: #fff;
+    }
+
+    #header.on{
+background-color: transparent;
+    }
+#header.on::after{
+   opacity: 0;
+}
+    #header .van-nav-bar,
+    #header .van-search {
+        background-color: transparent;
+    }
+
+    #header .van-search {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+    }
+
+    #header .home_search .van-icon {
+        font-size: 0.22rem;
+        width: 0.4rem;
+    }
+
+    #main {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+    }
+</style>
+
+<body>
+    <div id="app" class="flex">
+        <header id="header" class="border_b" ref="header" :class="{'on':tabbar.active == 3}">
+            <van-row type="flex" justify="center" class="home_search" v-show="tabbar.active == 0">
+                <van-icon name="scan" class="van-row--flex van-row--justify-center van-row--align-center">
+                </van-icon>
+                <van-search v-model="search" placeholder="请输入搜索关键词" input-align="center" disabled>
+                </van-search>
+                <van-icon name="chat-o" class="van-row--flex van-row--justify-center van-row--align-center">
+                </van-icon>
+            </van-row>
+            <van-nav-bar :title="tabbar.list[tabbar.active].text" :border="false" v-show="tabbar.active == 1 || tabbar.active == 2">
+            </van-nav-bar>
+        </header>
+        <div id="main">
+        </div>
+        <footer id="footer" class="border_t" ref="footer">
+            <van-tabbar v-model="tabbar.active" :fixed="false" :border="false" active-color="#ee0a24" @change="openFrame">
+                <van-tabbar-item icon="wap-home-o">首页</van-tabbar-item>
+                <van-tabbar-item icon="apps-o">发现</van-tabbar-item>
+                <van-tabbar-item icon="shopping-cart-o">购物车</van-tabbar-item>
+                <van-tabbar-item icon="user-o">我</van-tabbar-item>
+            </van-tabbar>
+        </footer>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/vant.min.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            tabbar: {
+                active: 0,
+                list: [{
+                    'icon': 'wap-home-o',
+                    'text': '首页',
+                    'url': 'home',
+                    'name': 'home'
+                }, {
+                    'icon': 'app-s',
+                    'text': '分类',
+                    'url': 'sort',
+                    'name': 'sort'
+                }, {
+                    'icon': 'shopping-cart-o',
+                    'text': '购物车',
+                    'url': 'shopping_cart',
+                    'name': 'shopping_cart'
+                }, {
+                    'icon': 'user-o',
+                    'text': '我',
+                    'url': 'my',
+                    'name': 'my'
+                }, ],
+            },
+            search: ''
+        },
+        mounted: function() {
+            apiready = function() {
+                app.init();
+            }
+        },
+        methods: {
+            init: function() {
+                /*安全区域*/
+                $api.fixStatusBar($api.byId('header'))
+                $api.fixTabBar($api.byId('footer'));
+                this.openFrame(this.tabbar.active);
+            },
+            goBackHome:function () {
+              this.tabbar.active = 0;
+              this.openFrame();
+            },
+            /*切换窗口*/
+            openFrame: function(_index) {
+                /*隐藏全部窗口*/
+                for (var i = 0; i < this.tabbar.list.length; i++) {
+                    api.setFrameAttr({
+                        name: this.tabbar.list[i].name,
+                        hidden: true
+                    });
+                }
+                /* DOM更新 */
+                this.$nextTick(function() {
+                    var top = this.$refs.header.offsetHeight;
+                    var bottom = this.$refs.footer.offsetHeight;
+                    var data = {
+                        name: this.tabbar.list[this.tabbar.active].name,
+                        url: 'widget://html/' + this.tabbar.list[this.tabbar.active].name + '/' + this.tabbar.list[this.tabbar.active].name + '.html',
+                        rect: {
+                            marginLeft: 0,
+                            marginTop: top,
+                            marginBottom: bottom,
+                            marginRight: 0
+                        },
+                        pageParam: {
+                            active: _index
+                        },
+                        bounces: this.tabbar.active == 1 ? false : true,
+                        vScrollBarEnabled: true,
+                        hScrollBarEnabled: true,
+                        useWKWebView: true,
+                    }
+                    api.openFrame(data);
+                })
+            }
+        }
+    });
+</script>
+
+</html>

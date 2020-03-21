@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/vant.css" />
+</head>
+<style type="text/css">
+  .page_null{
+    height: 100vh;
+    flex-direction: column;
+  }
+  .page_null .text{
+     font-size: 0.18rem;
+     margin-bottom: 0.15rem;
+  }
+</style>
+<body>
+    <div id="app">
+      <van-row type="flex" justify="center" align="center" class="page_null">
+        <div class="text">您的购物车还没有商品</div>
+        <van-button type="default" round size="small" text="去逛逛" color="#f32d2e" @click="goHomePage()"></van-button>
+      </van-row>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/vant.min.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+           myUserInfo: {},
+           name: '',
+           list: []
+        },
+        mounted: function() {
+            apiready = function() {
+                app.init();
+            };
+        },
+        methods: {
+            init: function() {
+               this.name = api.frameName
+            },
+            goHomePage:function () {
+               api.execScript({
+                   script: 'app.goBackHome();'
+               });
+            }
+        }
+    })
+</script>
+</html>

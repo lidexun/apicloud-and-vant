@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/vant.css" />
+</head>
+<style type="text/css">
+    html,body{
+      background-color: #f5f5f5;
+    }
+    #app {
+      padding-top: 0.1rem;
+    }
+    .home_swipe {
+      border-radius: 0.05rem;
+      overflow: hidden;
+        margin: 0 0.1rem ;
+        height: 2rem;
+    }
+
+    .home_goods {
+        padding: 0 0.05rem;
+    }
+
+    .home_goods_item,
+    .home_goods_img,
+    .van-grid-item__content {
+        background-color: transparent;
+    }
+
+    .van-grid-item__content {
+        padding: 0;
+    }
+
+    .home_goods_item {
+        height: 2.5rem;
+        border-radius: 0.05rem;
+        background-color: #fff;
+        margin: 0.05rem 0.05rem 0;
+        overflow: hidden;
+        border: 1px solid #ececec;
+    }
+
+    .home_goods_item .text {
+        font-size: 0.14rem;
+        height: 0.36rem;
+        padding: 0.05rem;
+    }
+
+    .home_goods_item .img {
+        height: 1.8rem;
+    }
+
+    .home_goods_item .current {
+        color: #f00;
+        font-size: 0.16rem;
+        margin: 0.05rem
+    }
+
+    .home_goods_item .current:before {
+        content: '¥';
+        font-size: 0.12rem
+    }
+
+    .home_goods_item .current span {
+        font-weight: bold;
+        margin-left: 0.05rem;
+    }
+    .floor{
+      flex-wrap: wrap;
+      padding: 0.05rem;
+      background-color: #fff;
+    }
+    .floor .floor_item{
+      margin: 0.05rem 0;
+    }
+    .floor .floor_item img{
+      border-radius: 100%;
+    }
+    .floor .floor_item .text{
+       color: #666;
+       margin-top: 0.05rem;
+       font-size: 0.12rem;
+    }
+    .list_title{
+      background-color: transparent;
+      margin-top: 0.05rem;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <!-- 轮播图 -->
+        <van-swipe class="home_swipe" :autoplay="3000" indicator-color="white">
+          <van-swipe-item v-for="(item,index) in banner" @click="iGlobal.toast(item.img.name)">
+            <van-image height="100%" fit="cover" :src="item.img.url" />
+          </van-swipe-item>
+        </van-swipe>
+        <!-- 功能项 -->
+        <van-grid :border="false" :column-num="floor.length / 2" class="floor">
+           <van-grid-item v-for="(item,index) in floor" class="floor_item">
+             <van-image :src="item.img" width="0.4rem"></van-image>
+             <span v-text="item.name" class="text"></span>
+           </van-grid-item>
+        </van-grid>
+        <van-nav-bar title="为你推荐" :border="false" class="list_title"></van-nav-bar>
+        <!-- 推荐列表 -->
+        <van-list v-model="loading" :finished="finished" finished-text="我已经到底了" @load="onLoad">
+            <van-grid class="home_goods" :border="false" :column-num="2">
+                <van-grid-item default v-for="item in list" :key="item">
+                    <div class="home_goods_item">
+                        <van-image fit="cover" class="img" width="100%" src="https://pop.nosdn.127.net/90d9a7d24dcf4b06a2c5a041c8e6ee9b_800_800.jpg?imageView&thumbnail=345x345&quality=95&type=webp">
+                        </van-image>
+                        <div class="text van-multi-ellipsis--l2">Adidas阿迪达斯Superstar经典款贝壳头男女运动板鞋小白鞋钻闪F33889 金标C77124/C77154升级版FU7712/EG4958</div>
+                        <div class="current">
+                            <span>319</span>
+                        </div>
+                    </div>
+                </van-grid-item>
+            </van-grid>
+        </van-list>
+    </div>
+</body>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/vant.min.js"></script>
+<script src="../../script/common.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            myUserInfo: {},
+            search: '',
+            banner: [],
+            floor: [],
+            list: [],
+            loading: false,
+            finished: false
+        },
+        mounted: function() {
+            apiready = function() {
+                app.init();
+            };
+        },
+        methods: {
+            init: function() {
+               model.findAll('banner',function (data) {
+                 app.banner = data;
+               },function () {
+
+               })
+
+               model.findAll('floor',function (data) {
+                 app.floor = data;
+               },function () {
+
+               })
+
+            },
+            onLoad: function() {
+                // 异步更新数据
+                // setTimeout 仅做示例，真实场景中一般为 ajax 请求
+                var self = this;
+                setTimeout(function() {
+                    for (var i = 0; i < 10; i++) {
+                        self.list.push(self.list.length + 1);
+                    }
+
+                    // 加载状态结束
+                    self.loading = false;
+
+                    // 数据全部加载完成
+                    if (self.list.length >= 40) {
+                        self.finished = true;
+                    }
+                }, 1000);
+            },
+        }
+    })
+</script>
+
+</html>
