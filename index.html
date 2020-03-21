@@ -1,29 +1,70 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>vant</title>
 </head>
-<body>
-<div>
 
-</div>
+<body>
 </body>
-<script src="script/vue.min.js"></script>
+<script type="text/javascript" src="script/common.js"></script>
+<script type="text/javascript" src="script/system.js"></script>
+<script type="text/javascript" src="script/vue.min.js"></script>
 <script type="text/javascript">
-    apiready = function() {
-       api.openWin({
-           name: 'main',
-           url: 'widget://html/main/main.html',
-           animation: {
-              type: 'none',
-           }
-       });
-       api.setStatusBarStyle({
-          style: 'dark'
-      });
-    };
+    var app = new Vue({
+        el: '#app',
+        data: {
+            myUserInfo: {}
+        },
+        mounted: function() {
+            apiready = function() {
+               app.init();
+                api.setStatusBarStyle({
+                    style: 'dark'
+                });
+            };
+        },
+        methods: {
+            init: function() {
+                var list = ['storage','notification'];
+                console.log(JSON.stringify(list));
+                /*获取存储权限*/
+                iSystem.requestPermission(list, function(ret, err) {
+                    /*一定要获取存储权限才可以访问*/
+                    if (!ret.list[0].granted) {
+                        app.init();
+                        return;
+                    }
+                    api.openWin({
+                        name: 'main',
+                        url: 'widget://html/main/main.html',
+                        animation: {
+                            type: 'none',
+                        }
+                    });
+                })
+            },
+            // index监听
+            addEventListener:function () {
+              // 应用进入后台
+              api.addEventListener({
+                  name:'pause'
+              }, function(ret, err){
+                 setTimeout(function () {
+                   api.notification({
+                        notify: {
+                        title: api.appName,
+                            content: api.appName
+                        }
+                      });
+                 },1000)
+              });
+            }
+        }
+    })
 </script>
+
 </html>

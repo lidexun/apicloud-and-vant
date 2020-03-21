@@ -1,6 +1,5 @@
 # apicloud-and-vant
-apicloud与vant框架搭建商城APP
-
+apicloud与vant框架搭建商城APP，会持续更新到完整的商城app项目
 
 # 介绍
 - 适配Android 4.4+, iOS 8.0+ rem适配
