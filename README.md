@@ -14,8 +14,5 @@ apicloud与vant框架搭建商城APP，会持续更新到完整的商城app项�
 |Fastclick|处理移动端300ms|  https://github.com/ftlabs/fastclick|
 
 # 预览图
-<<<<<<< HEAD
  ![image](https://github.com/iDgex/apicloud-and-vant/blob/master/image/0.png)
-=======
- ![image](https://github.com/iDgex/apicloud-and-vant/blob/master/image/0.png)
->>>>>>> 396b08e1595a3cb08a502ebb1fd6e7b3d61a249e
+
